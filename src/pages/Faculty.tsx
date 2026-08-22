@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { supabase } from "@/integrations/supabase/client";
-import { Mail, Phone, MapPin, Linkedin, GraduationCap, BookOpen, User } from "lucide-react";
+import { Mail, Phone, MapPin, Linkedin, GraduationCap, BookOpen } from "lucide-react";
 
 interface Faculty {
   id: string;
@@ -85,8 +85,23 @@ export default function Faculty() {
                 key={member.id}
                 className="bg-card border-border hover:border-primary/40 transition-all duration-300 hover:shadow-emerald flex flex-col overflow-hidden group"
               >
-                {/* Top Banner Header */}
-                <div className="h-20 bg-gradient-to-r from-primary/20 via-primary/10 to-primary/5 relative">
+                {/* Cropped Image Container */}
+                <div className="relative h-48 w-full bg-muted overflow-hidden">
+                  {member.image_url ? (
+                    <img
+                      src={member.image_url}
+                      alt={member.name}
+                      className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-300"
+                    />
+                  ) : (
+                    <div className="w-full h-full bg-gradient-emerald-subtle flex items-center justify-center">
+                      <div className="w-20 h-20 rounded-full bg-primary/20 flex items-center justify-center border-2 border-primary/30">
+                        <span className="text-3xl font-bold text-primary">
+                          {member.name.charAt(0)}
+                        </span>
+                      </div>
+                    </div>
+                  )}
                   {member.experience_years > 0 && (
                     <Badge
                       variant="secondary"
@@ -97,54 +112,34 @@ export default function Faculty() {
                   )}
                 </div>
 
-                {/* Passport-Sized Photo Frame */}
-                <div className="-mt-12 px-6 flex justify-center">
-                  <div className="w-28 h-36 rounded-lg bg-muted border-4 border-card shadow-md overflow-hidden flex-shrink-0 group-hover:border-primary/40 transition-colors duration-300">
-                    {member.image_url ? (
-                      <img
-                        src={member.image_url}
-                        alt={member.name}
-                        className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-300"
-                      />
-                    ) : (
-                      <div className="w-full h-full bg-primary/10 flex flex-col items-center justify-center text-primary">
-                        <User className="h-10 w-10 mb-1 opacity-70" />
-                        <span className="text-sm font-bold">
-                          {member.name.charAt(0)}
-                        </span>
-                      </div>
-                    )}
-                  </div>
-                </div>
-
-                <CardContent className="p-5 pt-3 flex-1 flex flex-col justify-between space-y-4 text-center">
+                <CardContent className="p-5 flex-1 flex flex-col justify-between space-y-4">
                   <div>
-                    {/* Header Info */}
-                    <div className="mb-2">
-                      <div className="flex items-center justify-center gap-1.5">
+                    {/* Header info */}
+                    <div className="flex items-start justify-between gap-2 mb-1.5">
+                      <div>
                         <h2 className="font-heading text-lg font-bold text-foreground line-clamp-1 group-hover:text-primary transition-colors">
                           {member.name}
                         </h2>
-                        {member.linkedin_url && (
-                          <a
-                            href={member.linkedin_url}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-muted-foreground hover:text-primary transition-colors"
-                            title="LinkedIn Profile"
-                          >
-                            <Linkedin className="h-4 w-4 flex-shrink-0" />
-                          </a>
-                        )}
+                        <p className="text-sm text-primary font-semibold line-clamp-1">
+                          {member.position}
+                        </p>
                       </div>
-                      <p className="text-xs text-primary font-semibold line-clamp-1 mt-0.5">
-                        {member.position}
-                      </p>
+                      {member.linkedin_url && (
+                        <a
+                          href={member.linkedin_url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-muted-foreground hover:text-primary transition-colors p-1"
+                          title="LinkedIn Profile"
+                        >
+                          <Linkedin className="h-4 w-4 flex-shrink-0" />
+                        </a>
+                      )}
                     </div>
 
                     {/* Qualifications */}
                     {member.qualifications && (
-                      <div className="flex items-center justify-center gap-1.5 text-xs text-muted-foreground mb-3">
+                      <div className="flex items-center gap-1.5 text-xs text-muted-foreground mb-3">
                         <GraduationCap className="h-3.5 w-3.5 text-primary flex-shrink-0" />
                         <span className="line-clamp-1 font-medium">{member.qualifications}</span>
                       </div>
@@ -152,17 +147,17 @@ export default function Faculty() {
 
                     {/* Bio Snippet */}
                     {member.bio && (
-                      <p className="text-xs text-muted-foreground line-clamp-2 leading-relaxed mb-3 text-left">
+                      <p className="text-xs text-muted-foreground line-clamp-2 leading-relaxed mb-3">
                         {member.bio}
                       </p>
                     )}
 
                     {/* Research Areas */}
                     {member.research_areas && member.research_areas.length > 0 && (
-                      <div className="space-y-1 mb-3 text-left">
+                      <div className="space-y-1 mb-3">
                         <div className="flex items-center gap-1 text-xs text-foreground font-semibold">
                           <BookOpen className="h-3 w-3 text-primary" />
-                          <span>Research Areas</span>
+                          <span>Research</span>
                         </div>
                         <div className="flex flex-wrap gap-1">
                           {member.research_areas.slice(0, 3).map((area, index) => (
@@ -185,7 +180,7 @@ export default function Faculty() {
 
                     {/* Publications */}
                     {member.publications && member.publications.length > 0 && (
-                      <div className="space-y-1 text-left">
+                      <div className="space-y-1">
                         <h3 className="text-xs font-semibold text-foreground">
                           Publications ({member.publications.length})
                         </h3>
@@ -201,7 +196,7 @@ export default function Faculty() {
                   </div>
 
                   {/* Contact Links Footer */}
-                  <div className="border-t border-border/60 pt-3 space-y-1.5 text-xs text-muted-foreground text-left">
+                  <div className="border-t border-border/60 pt-3 space-y-1.5 text-xs text-muted-foreground">
                     {member.email && (
                       <div className="flex items-center gap-2 truncate">
                         <Mail className="h-3.5 w-3.5 text-primary flex-shrink-0" />
