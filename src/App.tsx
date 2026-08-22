@@ -14,15 +14,12 @@ import Events from "./pages/Events";
 import Resources from "./pages/Resources";
 import Auth from "./pages/Auth";
 import Admin from "./pages/Admin";
-import { useAutoLogout } from "@/hooks/useAutoLogout";
+import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
 
 const App = () => {
   const [user, setUser] = useState<any>(null);
-
-  // Enable automatic session logout after 15 minutes of inactivity
-  useAutoLogout(15 * 60 * 1000);
 
   useEffect(() => {
     // Get initial session
