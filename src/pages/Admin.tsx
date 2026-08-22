@@ -215,32 +215,34 @@ export default function Admin() {
         </div>
 
         <Tabs defaultValue="events" className="w-full">
-          <TabsList className="grid w-full max-w-5xl grid-cols-6 mb-8">
-            <TabsTrigger value="events" className="flex items-center gap-2">
-              <Calendar className="h-4 w-4" />
-              Events
-            </TabsTrigger>
-            <TabsTrigger value="resources" className="flex items-center gap-2">
-              <FolderOpen className="h-4 w-4" />
-              Resources
-            </TabsTrigger>
-            <TabsTrigger value="faculty" className="flex items-center gap-2">
-              <Users className="h-4 w-4" />
-              Faculty
-            </TabsTrigger>
-            <TabsTrigger value="alumni" className="flex items-center gap-2">
-              <GraduationCap className="h-4 w-4" />
-              Alumni
-            </TabsTrigger>
-            <TabsTrigger value="codes" className="flex items-center gap-2">
-              <Key className="h-4 w-4" />
-              Codes
-            </TabsTrigger>
-            <TabsTrigger value="account" className="flex items-center gap-2">
-              <KeyRound className="h-4 w-4" />
-              Account
-            </TabsTrigger>
-          </TabsList>
+          <div className="overflow-x-auto pb-2 mb-6 scrollbar-none">
+            <TabsList className="inline-flex w-full min-w-[600px] md:min-w-full justify-between h-auto p-1.5 bg-muted/80 rounded-xl">
+              <TabsTrigger value="events" className="flex items-center gap-2 py-2 px-3 text-xs sm:text-sm">
+                <Calendar className="h-4 w-4" />
+                <span>Events</span>
+              </TabsTrigger>
+              <TabsTrigger value="resources" className="flex items-center gap-2 py-2 px-3 text-xs sm:text-sm">
+                <FolderOpen className="h-4 w-4" />
+                <span>Resources</span>
+              </TabsTrigger>
+              <TabsTrigger value="faculty" className="flex items-center gap-2 py-2 px-3 text-xs sm:text-sm">
+                <Users className="h-4 w-4" />
+                <span>Faculty</span>
+              </TabsTrigger>
+              <TabsTrigger value="alumni" className="flex items-center gap-2 py-2 px-3 text-xs sm:text-sm">
+                <GraduationCap className="h-4 w-4" />
+                <span>Alumni</span>
+              </TabsTrigger>
+              <TabsTrigger value="codes" className="flex items-center gap-2 py-2 px-3 text-xs sm:text-sm">
+                <Key className="h-4 w-4" />
+                <span>Codes</span>
+              </TabsTrigger>
+              <TabsTrigger value="account" className="flex items-center gap-2 py-2 px-3 text-xs sm:text-sm">
+                <KeyRound className="h-4 w-4" />
+                <span>Account</span>
+              </TabsTrigger>
+            </TabsList>
+          </div>
 
           <TabsContent value="events">
             <EventManagement 
